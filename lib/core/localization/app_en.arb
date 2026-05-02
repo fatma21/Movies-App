@@ -1,0 +1,20 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "forgetPassword": "Forget Password ?",
+  "onboardingTitle1":"Find Your Next Favorite Movie Here",
+  "onboardingTitle2":"Discover Movies",
+  "onboardingTitle3":"Explore All Genres",
+  "onboardingTitle4":"Create Watchlists",
+  "onboardingTitle5":"Rate, Review, and Learn",
+  "onboardingTitle6":"Start Watching Now",
+  "onboardingDesc1":"Get access to a huge library of movies to suit all tastes. You will surely like it",
+  "onboardingDesc2":"Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.",
+  "onboardingDesc3":"Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.",
+  "onboardingDesc4":"Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.",
+  "onboardingDesc5": "Share your thoughts on the movies you've watched. Dive deep into film details and help others discover great movies with your reviews.",
+  "donHaveAnAccount": "Don’t Have Account ?",
+  "createOne":"Create One",
+  "loginWithGoogle":"Login With Google"
+}

@@ -1,0 +1,19 @@
+flutter_native_splash:
+  color: "#121312"  ##====================================[REQUIRED]==========
+  image:                assets/images/Group 44.png
+
+  # platform-specific branding. will override general branding if active:
+  branding_android:      assets/images/Group 46.png
+
+  fullscreen: true                # default false
+
+  #! ANDROID 12+ configuration:
+  android_12:
+    # background color
+    color: "#121312"
+    image: assets/images/Group 44.png
+
+    # center-logo background color
+    icon_background_color: "#121312"
+    # branding:
+    branding:      assets/images/Group 46.png
