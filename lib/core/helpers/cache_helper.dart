@@ -15,8 +15,4 @@ class CacheHelper {
     return sharedPreferences.getBool(key) ?? true;
   }
 
-  static Future<bool> clearData() async {
-    return await sharedPreferences.clear();
-  }
-
 }
