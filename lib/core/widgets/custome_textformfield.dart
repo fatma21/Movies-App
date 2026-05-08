@@ -10,6 +10,10 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final String? Function(String)? onChanged;
+
+
 
   const CustomTextFormField({
     super.key,
@@ -19,6 +23,8 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.validator,
+    this.keyboardType,
+    this.onChanged,
   });
 
   @override
@@ -27,6 +33,8 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       validator: validator,
+      onChanged: onChanged,
+      keyboardType: keyboardType,
       style: AppStyles.roboto16White400,
       decoration: InputDecoration(
         hintText: hintText,

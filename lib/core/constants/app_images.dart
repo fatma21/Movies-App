@@ -24,4 +24,12 @@ class AppImages {
   static const String forgetPasswordImage="${_basePath}Forgot password-bro 1.png";
   static const String nameIcon="${_basePath}Identification_.png";
   static const String phoneIcon="${_basePath}Vector (2).png";
+  static const String homeIcon="${_basePath}home.png";
+  static const String searchIcon="${_basePath}search.png";
+  static const String exploreIcon="${_basePath}explore.png";
+  static const String profileIcon="${_basePath}Profiel.png";
+  static const String availableNow="${_basePath}Available Now.png";
+  static const String watchNow="${_basePath}Watch Now.png";
+  static const String emptyImage="${_basePath}Empty 1.png";
+  static const String exitIcon="${_basePath}Group 46 (1).png";
 }

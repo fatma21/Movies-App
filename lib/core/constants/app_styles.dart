@@ -88,4 +88,22 @@ class AppStyles {
       color: Colors.white,
       fontFamily: "Roboto"
   );
+  static TextStyle roboto36White700 = TextStyle(
+      fontSize: 36.sp,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      fontFamily: "Roboto"
+  );
+  static TextStyle roboto24White700 = TextStyle(
+      fontSize: 24.sp,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      fontFamily: "Roboto"
+  );
+  static TextStyle roboto20White700 = TextStyle(
+      fontSize: 20.sp,
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      fontFamily: "Roboto"
+  );
 }
