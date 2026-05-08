@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "212168037354",
+    "project_id": "movies-app-by-fatoma",
+    "storage_bucket": "movies-app-by-fatoma.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212168037354:android:80e70352a2e9eedde2d893",
+        "android_client_info": {
+          "package_name": "com.example.movies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212168037354-9ootk9434edig542ao1p8bnsdpiqedko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movies",
+            "certificate_hash": "755d6fc27bde7d540b57d83249392221e6851a5e"
+          }
+        },
+        {
+          "client_id": "212168037354-psbtfc2pu4ahlq0creutgp4jhqb03i4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBphIYr7csRNsyZ_WDhhXCuupOathG2884"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212168037354-psbtfc2pu4ahlq0creutgp4jhqb03i4l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "212168037354-ipdcvn5c22uajja2712k7s3j0kl2dfin.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.movies"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
