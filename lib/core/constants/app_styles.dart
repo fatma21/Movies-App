@@ -106,4 +106,10 @@ class AppStyles {
       color: Colors.white,
       fontFamily: "Roboto"
   );
+  static TextStyle roboto20Gray700 = TextStyle(
+      fontSize: 20.sp,
+      fontWeight: FontWeight.w700,
+      color: Color(0xFFADADAD),
+      fontFamily: "Roboto"
+  );
 }

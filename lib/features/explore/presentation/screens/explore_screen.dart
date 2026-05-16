@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/constants/app_colors.dart';
+import 'package:movies/core/widgets/empty_list_widget.dart';
 import 'package:movies/core/widgets/movie_card.dart';
 import 'package:movies/features/explore/presentation/widgets/category_container.dart';
 
@@ -57,7 +58,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ),
                       itemCount: 5,
                       itemBuilder: (context,index){
-                        return MovieCard(cardWidth: 189,cardHeight: 279,);
+                        return EmptyListWidget();
+                        //MovieCard(cardWidth: 189,cardHeight: 279,);
                       }
                   ),
                 )

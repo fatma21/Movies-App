@@ -32,4 +32,6 @@ class AppImages {
   static const String watchNow="${_basePath}Watch Now.png";
   static const String emptyImage="${_basePath}Empty 1.png";
   static const String exitIcon="${_basePath}Group 46 (1).png";
+  static const String saveIcon="${_basePath}save.png";
+  static const String playIcon="${_basePath}Group 21.png";
 }

@@ -6,5 +6,7 @@ class AppRoutes {
   static String homeScreen="homeScreen";
   static String profileScreen="profileScreen";
   static String editProfileScreen="editProfileScreen";
-
+  static String moviesDetailsScreen="moviesDetailsScreen";
+  static String searchScreen="searchScreen";
+  static String exploreScreen="exploreScreen";
 }

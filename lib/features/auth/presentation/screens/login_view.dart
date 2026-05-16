@@ -106,7 +106,7 @@ class _LoginViewState extends State<LoginView> {
                       },
                       builder: (context, state) {
                         if (state is LoginLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
                         }
 
                         return PrimaryElevatedButton(

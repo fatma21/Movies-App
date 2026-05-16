@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/features/explore/presentation/screens/explore_screen.dart';
 import 'package:movies/features/search/presentation/screens/search_screen.dart';
-import '../../../core/constants/app_images.dart';
-import '../../home/presentation/views/home_view.dart';
-import '../../profile/presentation/views/profile_view.dart';
+import '../../../../core/constants/app_images.dart';
+import '../../../home/presentation/managers/home_cubit.dart';
+import '../../../home/presentation/screens/home_view.dart';
+import '../../../profile/presentation/views/profile_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -60,6 +62,10 @@ class _HomeViewState extends State<HomeView> {
     bool isSelected = currentIndex == index;
     return IconButton(
       onPressed: () {
+        if(index == 0 && currentIndex != 0){
+          context.read<HomeCubit>().fetchChangingGenreMovies();
+          context.read<HomeCubit>().fetchHomeMovies();
+        }
         setState(() {
           currentIndex = index;
         });
