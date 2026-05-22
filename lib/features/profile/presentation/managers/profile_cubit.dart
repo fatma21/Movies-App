@@ -1,9 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/models/movies_model.dart';
+import '../../../../core/network/api_service.dart';
+import '../../../home/data/data_source/home_remote_data_source.dart';
+import '../../../home/data/repositories/home_repo.dart';
 import '../../data/repositories/profile_repo.dart';
 import 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepo profileRepo;
+  //List<MovieModel> wishlistMovies = [];
 
   ProfileCubit(this.profileRepo) : super(const ProfileState());
 
@@ -21,6 +27,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
     }
+  }
+
+  void clearProfile() {
+    emit(const ProfileState());
   }
 
   void updateDraft({
@@ -54,4 +64,107 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(state.copyWith(isUpdating: false, error: e.toString()));
     }
   }
+
+  Future<void> toggleWishlist({
+    required String uid,
+    required String movieId,
+  }) async {
+    try {
+      final wishlist =
+      List<String>.from(state.user?.wishlist ?? []);
+
+      if (wishlist.contains(movieId)) {
+        await profileRepo.removeFromWishlist(uid, movieId);
+
+        wishlist.remove(movieId);
+      } else {
+        await profileRepo.addToWishlist(uid, movieId);
+
+        wishlist.add(movieId);
+      }
+
+      emit(
+        state.copyWith(
+          user: state.user?.copyWith(),
+        ),
+      );
+
+      await getUserProfile(uid);
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
+  }
+
+  Future<void> addMovieToHistory({
+    required String uid,
+    required String movieId,
+  }) async {
+    try {
+      await profileRepo.addToHistory(uid, movieId);
+
+      await getUserProfile(uid);
+    } catch (e) {
+      emit(state.copyWith(error: e.toString()));
+    }
+  }
+
+
+  Future<List<MovieModel>> getWishlistMovies(
+      List<String> ids,
+      ) async {
+
+    try {
+
+      List<MovieModel> movies = [];
+
+      for (String id in ids) {
+
+        final movie =
+        await HomeRepo(
+          HomeRemoteDataSource(
+            ApiService(Dio()),
+          ),
+        ).getMovieById(
+          int.parse(id),
+        );
+
+        movies.add(movie);
+      }
+
+      return movies;
+
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<List<MovieModel>> getHistoryMovies(
+      List<String> ids,
+      ) async {
+
+    try {
+
+      List<MovieModel> movies = [];
+
+      for (String id in ids) {
+
+        final movie =
+        await HomeRepo(
+          HomeRemoteDataSource(
+            ApiService(Dio()),
+          ),
+        ).getMovieById(
+          int.parse(id),
+        );
+
+        movies.add(movie);
+      }
+
+      return movies;
+
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
 }

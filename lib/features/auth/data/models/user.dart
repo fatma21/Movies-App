@@ -45,6 +45,8 @@ class MyUserModel {
     String? name,
     String? phone,
     String? avatar,
+    List<String>? wishlist,
+    List<String>? history,
   }) {
     return MyUserModel(
       id: id,
@@ -52,6 +54,8 @@ class MyUserModel {
       name: name ?? this.name,
       phone: phone ?? this.phone,
       avatar: avatar ?? this.avatar,
+      wishlist: wishlist ?? this.wishlist,
+      history: history ?? this.history,
     );
   }
 }

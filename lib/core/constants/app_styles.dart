@@ -112,4 +112,10 @@ class AppStyles {
       color: Color(0xFFADADAD),
       fontFamily: "Roboto"
   );
+  static TextStyle roboto15Yellow400 = TextStyle(
+      fontSize: 15.sp,
+      fontWeight: FontWeight.w400,
+      color: AppColors.primaryColor,
+      fontFamily: "Roboto"
+  );
 }

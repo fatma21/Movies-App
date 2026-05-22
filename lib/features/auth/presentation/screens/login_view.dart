@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import '../../../../core/constants/app_routes.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/widgets/custome_textformfield.dart';
 import '../../../../core/widgets/primary_elevated_button.dart';
+import '../../../profile/presentation/managers/profile_cubit.dart';
 import '../managers/auth_cubit.dart';
 import '../managers/auth_state.dart';
 
@@ -89,9 +91,19 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) {
+                      listener: (context, state)async {
                         if (state is LoginSuccess) {
-                          Navigator.pushReplacementNamed(context, AppRoutes.homeScreen);
+
+                          final uid = FirebaseAuth.instance.currentUser!.uid;
+
+                          await context.read<ProfileCubit>().getUserProfile(uid);
+
+                          if (context.mounted) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.homeScreen,
+                            );
+                          }
                         } else if (state is LoginError) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -106,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
                       },
                       builder: (context, state) {
                         if (state is LoginLoading) {
-                          return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
+                          return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor ,));
                         }
 
                         return PrimaryElevatedButton(
@@ -157,7 +169,7 @@ class _LoginViewState extends State<LoginView> {
                   spacing: 20,
                   children: [
                     Expanded(child: Divider(color: AppColors.primaryColor,)),
-                    Text("OR"),
+                    Text("OR",style: AppStyles.roboto15Yellow400,),
                     Expanded(child: Divider(color: AppColors.primaryColor,))
                   ],
                 ),

@@ -21,11 +21,12 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.darkColor,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
-
         },
             icon: Icon(Icons.arrow_back,color: AppColors.primaryColor,)
         ),

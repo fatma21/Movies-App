@@ -54,7 +54,7 @@ class MoviesApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ProfileCubit(
             ProfileRepo(ProfileRemoteDataSource()),
-          )..getUserProfile(FirebaseAuth.instance.currentUser?.uid ?? ""),
+          ),
         ),
         BlocProvider(
           create: (context) => HomeCubit(

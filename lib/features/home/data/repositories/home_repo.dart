@@ -26,4 +26,8 @@ class HomeRepo {
     return _remoteDataSource.getSimilarMovies(movieId);
   }
 
+  Future<MovieModel> getMovieById(int id) {
+    return _remoteDataSource.getMovieById(id);
+  }
+
 }

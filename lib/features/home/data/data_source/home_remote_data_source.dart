@@ -106,4 +106,21 @@ class HomeRemoteDataSource {
       return []; // Return empty list instead of crashing
     }
   }
+
+  Future<MovieModel> getMovieById(int id) async {
+    final data = await _apiService.get(
+      'movie_details.json',
+      query: {
+        'movie_id': id,
+      },
+    );
+
+    if (data['status'] == 'ok') {
+      return MovieModel.fromJson(
+        data['data']['movie'],
+      );
+    } else {
+      throw Exception(data['status_message']);
+    }
+  }
 }

@@ -4,9 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/features/explore/presentation/screens/explore_screen.dart';
 import 'package:movies/features/search/presentation/screens/search_screen.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../explore/presentation/mangers/explore_cubit.dart';
 import '../../../home/presentation/managers/home_cubit.dart';
 import '../../../home/presentation/screens/home_view.dart';
 import '../../../profile/presentation/views/profile_view.dart';
+import '../../../search/presentation/managers/search_cubit.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,14 +23,21 @@ class _HomeViewState extends State<HomeView> {
 
   final List<Widget> screens = [
     const HomeTab(),
-    const SearchScreen(),
-    ExploreScreen(),
+    BlocProvider(
+        create: (_) => sl<SearchCubit>()..onSearchChanged(''),
+        child: const SearchScreen()),
+    BlocProvider(
+      create: (_) => sl<ExploreCubit>()
+        ..fetchMoviesByGenre(),
+      child: const ExploreScreen(),
+    ),
     ProfileView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [

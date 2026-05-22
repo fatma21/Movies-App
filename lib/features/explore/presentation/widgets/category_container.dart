@@ -6,7 +6,8 @@ import '../../../../core/constants/app_styles.dart';
 
 class CategoryContainer extends StatelessWidget {
   final bool isSelected;
-  const CategoryContainer({super.key,this.isSelected=false});
+  final String category;
+  const CategoryContainer({super.key,this.isSelected=false,required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CategoryContainer extends StatelessWidget {
           //vertical: 12.h,
           horizontal: 20.w
         ),
-        child: Center(child: Text("Action",style: isSelected?AppStyles.inter20DarkSemiBold:AppStyles.inter20Yellow600,)),
+        child: Center(child: Text(category,style: isSelected?AppStyles.inter20DarkSemiBold:AppStyles.inter20Yellow600,)),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +8,9 @@ import 'package:movies/core/constants/app_styles.dart';
 import 'package:movies/core/models/movies_model.dart';
 import 'package:movies/features/movies_detials/presentation/widgets/gender_widegt.dart';
 import 'package:movies/features/movies_detials/presentation/widgets/movie_data_container.dart';
-
-import '../../../../core/network/api_service.dart';
 import '../../../../core/widgets/movie_card.dart';
-import '../../../home/data/data_source/home_remote_data_source.dart';
-import '../../../home/data/repositories/home_repo.dart';
+import '../../../profile/presentation/managers/profile_cubit.dart';
+import '../../../profile/presentation/managers/profile_state.dart';
 import '../managers/details_cubit.dart';
 import '../managers/details_states.dart';
 
@@ -21,6 +19,12 @@ class MoviesDetailsScreen extends StatelessWidget {
   const MoviesDetailsScreen({super.key, required this.movie});
   @override
   Widget build(BuildContext context) {
+    if (movie.id != 0) {
+      context.read<ProfileCubit>().addMovieToHistory(
+        uid: FirebaseAuth.instance.currentUser!.uid,
+        movieId: movie.id.toString(),
+      );
+    }
     return Scaffold(
       backgroundColor: AppColors.darkColor,
       body: BlocBuilder<DetailsCubit, DetailsState>(
@@ -72,10 +76,41 @@ class MoviesDetailsScreen extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Image.asset(AppImages.saveIcon),
+                            BlocBuilder<ProfileCubit, ProfileState>(
+                              builder: (context, profileState) {
+
+                                final wishlist =
+                                    profileState.user?.wishlist ?? [];
+
+                                final isSaved = wishlist.contains(
+                                  currentMovie.id.toString(),
+                                );
+
+                                return IconButton(
+                                  onPressed: () {
+                                    context.read<ProfileCubit>().toggleWishlist(
+                                      uid: FirebaseAuth.instance.currentUser!.uid,
+                                      movieId: currentMovie.id.toString(),
+                                    );
+                                  },
+                                  // IconButton(
+                                  //   onPressed: () {},
+                                  //   icon: Image.asset(AppImages.saveIcon),
+                                  // ),
+                                  icon: Icon(
+                                    isSaved
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: AppColors.primaryColor,
+                                    size: 30.sp,
+                                  ),
+                                );
+                              },
                             ),
+                            // IconButton(
+                            //   onPressed: () {},
+                            //   icon: Image.asset(AppImages.saveIcon),
+                            // ),
                           ],
                         ),
                         Image.asset(AppImages.playIcon),

@@ -9,6 +9,9 @@ import 'package:movies/core/constants/app_styles.dart';
 import 'package:movies/core/widgets/empty_list_widget.dart';
 import 'package:movies/core/widgets/primary_elevated_button.dart';
 import 'package:movies/features/profile/presentation/managers/profile_state.dart';
+import 'package:movies/features/profile/presentation/views/history_screen.dart';
+import 'package:movies/features/profile/presentation/views/wishlist_screen.dart';
+import '../../../../core/di/service_locator.dart';
 import '../managers/profile_cubit.dart';
 
 class ProfileView extends StatelessWidget {
@@ -40,20 +43,51 @@ class ProfileView extends StatelessWidget {
                           );
                         }
                     ),
-                    Column(
-                      spacing: 20.h,
-                      children: [
-                        Text("12",style: AppStyles.roboto36White700,),
-                        Text("Wish List",style: AppStyles.roboto24White700,),
-                      ],
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+
+                        final wishlistCount =
+                            state.user?.wishlist.length ?? 0;
+
+                        return Column(
+                          spacing: 20.h,
+                          children: [
+                            Text(
+                              wishlistCount.toString(),
+                              style: AppStyles.roboto36White700,
+                            ),
+
+                            Text(
+                              "Wish List",
+                              style: AppStyles.roboto24White700,
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    Column(
-                      spacing: 20.h,
-                      children: [
-                        Text("10",style: AppStyles.roboto36White700,),
-                        Text("History",style: AppStyles.roboto24White700,),
-                      ],
-                    )
+
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+
+                        final historyCount =
+                            state.user?.history.length ?? 0;
+
+                        return Column(
+                          spacing: 20.h,
+                          children: [
+                            Text(
+                              historyCount.toString(),
+                              style: AppStyles.roboto36White700,
+                            ),
+
+                            Text(
+                              "History",
+                              style: AppStyles.roboto24White700,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ],
                 ),
                 Row(
@@ -69,6 +103,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async {
+                        context.read<ProfileCubit>().clearProfile();
                         await FirebaseAuth.instance.signOut();
                         if (context.mounted) {
                           Navigator.pushNamedAndRemoveUntil(
@@ -132,8 +167,8 @@ class ProfileView extends StatelessWidget {
                       color: AppColors.darkColor,
                       child: TabBarView(
                         children: [
-                          EmptyListWidget(),
-                          EmptyListWidget(),
+                          const WishlistScreen(),
+                          const HistoryScreen()
                         ],
                       ),
                     ),

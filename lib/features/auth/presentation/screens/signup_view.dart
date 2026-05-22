@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/utils/app_validators.dart';
 import '../../../../core/widgets/custome_textformfield.dart';
 import '../../../../core/widgets/primary_elevated_button.dart';
+import '../../../profile/presentation/managers/profile_cubit.dart';
 import '../managers/auth_cubit.dart';
 import '../managers/auth_state.dart';
 
@@ -54,6 +56,7 @@ class _SignupViewState extends State<SignupView> {
     return Scaffold(
       backgroundColor: AppColors.darkColor,
       appBar: AppBar(
+        backgroundColor: AppColors.darkColor,
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
         },
@@ -178,11 +181,20 @@ class _SignupViewState extends State<SignupView> {
                       ),
                     ),
                     BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) {
+                      listener: (context, state) async{
                         if (state is RegisterSuccess) {
-                          // Navigate to Home or show a success message
-                          Navigator.pushReplacementNamed(context, AppRoutes.homeScreen);
-                        } else if (state is RegisterError) {
+
+                          final uid = FirebaseAuth.instance.currentUser!.uid;
+
+                          await context.read<ProfileCubit>().getUserProfile(uid);
+
+                          if (context.mounted) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.homeScreen,
+                            );
+                          }
+                        }else if (state is RegisterError) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(state.message, style: AppStyles.roboto14White400),
