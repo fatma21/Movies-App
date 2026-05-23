@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import '../../../../core/di/service_locator.dart';
 import '../../../explore/presentation/mangers/explore_cubit.dart';
 import '../../../home/presentation/managers/home_cubit.dart';
 import '../../../home/presentation/screens/home_view.dart';
+import '../../../profile/presentation/managers/profile_cubit.dart';
 import '../../../profile/presentation/views/profile_view.dart';
 import '../../../search/presentation/managers/search_cubit.dart';
 
@@ -33,6 +35,15 @@ class _HomeViewState extends State<HomeView> {
     ),
     ProfileView(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    context.read<ProfileCubit>().getUserProfile(uid);
+  }
 
   @override
   Widget build(BuildContext context) {

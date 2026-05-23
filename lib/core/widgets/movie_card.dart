@@ -9,6 +9,7 @@ import '../../features/movies_detials/presentation/managers/details_cubit.dart';
 import '../../features/movies_detials/presentation/screens/movies_details_screen.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_styles.dart';
+import '../di/service_locator.dart';
 import '../models/movies_model.dart';
 import '../network/api_service.dart';
 
@@ -28,8 +29,9 @@ class MovieCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => DetailsCubit(HomeRepo(HomeRemoteDataSource(ApiService(Dio()))))
-                ..fetchMovieDetails(movie.id),
+              create: (context) => DetailsCubit(
+                sl<HomeRepo>(),
+              )..fetchMovieDetails(movie.id),
               child: MoviesDetailsScreen(movie: movie),
             ),
           ),

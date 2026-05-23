@@ -13,6 +13,8 @@ import '../../../profile/presentation/managers/profile_cubit.dart';
 import '../../../profile/presentation/managers/profile_state.dart';
 import '../managers/details_cubit.dart';
 import '../managers/details_states.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class MoviesDetailsScreen extends StatelessWidget {
   final MovieModel movie;
@@ -134,7 +136,20 @@ class MoviesDetailsScreen extends StatelessWidget {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final code = currentMovie.ytTrailerCode;
+
+                        if (code == null || code.isEmpty) return;
+
+                        final url = Uri.parse(
+                          "https://www.youtube.com/watch?v=$code",
+                        );
+
+                        await launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.redColor,
                         shape: RoundedRectangleBorder(

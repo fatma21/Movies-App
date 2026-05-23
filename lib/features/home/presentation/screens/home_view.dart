@@ -71,52 +71,55 @@ class _HomeTabState extends State<HomeTab> {
                             fit: BoxFit.cover,
                           )
                         ),
-                        Column(
-                          children: [
-                            Image.asset(AppImages.availableNow),
-                            SizedBox(
-                                height: 351.h,
-                                child: PageView.builder(
-                                  controller: _pageController,
-                                  itemCount: state.genreMovies.length,
-                                  onPageChanged: (index) =>
-                                      setState(() => currentSlide = index),
-                                  itemBuilder: (context, index) {
-                                    if (movies.isEmpty) return const SizedBox();
-                                    final movie = movies[index % movies.length];
-                                    double scale = currentSlide == index
-                                        ? 1.0
-                                        : 0.8;
-                                    return TweenAnimationBuilder(
-                                      duration: const Duration(
-                                          milliseconds: 300),
-                                      curve: Curves.easeOut,
-                                      tween: Tween<double>(
-                                          begin: scale, end: scale),
-                                      builder: (context, value, child) {
-                                        return Transform.scale(
-                                          scale: value,
-                                          child: MovieCard(
-                                            imageUrl: movie.largeCoverImage,
-                                            rate: movie.rating.toString(),
-                                            movie: movie,
-                                            cardHeight: 351,
-                                            cardWidth: 234,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                )
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.h),
+                          child: Column(
+                            children: [
+                              Image.asset(AppImages.availableNow),
+                              SizedBox(
+                                  height: 351.h,
+                                  child: PageView.builder(
+                                    controller: _pageController,
+                                    itemCount: state.genreMovies.length,
+                                    onPageChanged: (index) =>
+                                        setState(() => currentSlide = index),
+                                    itemBuilder: (context, index) {
+                                      if (movies.isEmpty) return const SizedBox();
+                                      final movie = movies[index % movies.length];
+                                      double scale = currentSlide == index
+                                          ? 1.0
+                                          : 0.8;
+                                      return TweenAnimationBuilder(
+                                        duration: const Duration(
+                                            milliseconds: 300),
+                                        curve: Curves.easeOut,
+                                        tween: Tween<double>(
+                                            begin: scale, end: scale),
+                                        builder: (context, value, child) {
+                                          return Transform.scale(
+                                            scale: value,
+                                            child: MovieCard(
+                                              imageUrl: movie.largeCoverImage,
+                                              rate: movie.rating.toString(),
+                                              movie: movie,
+                                              cardHeight: 351,
+                                              cardWidth: 234,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  )
 
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 38.w
                               ),
-                              child: Image.asset(AppImages.watchNow),
-                            ),
-                          ],
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 38.w
+                                ),
+                                child: Image.asset(AppImages.watchNow),
+                              ),
+                            ],
+                          ),
                         )
                       ]
                   );
@@ -175,7 +178,7 @@ class _HomeTabState extends State<HomeTab> {
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
 
-                            itemCount: 10,
+                            itemCount: state.genreMovies.length,
 
                             itemBuilder: (context, index) {
                               final movie = state.genreMovies[index];

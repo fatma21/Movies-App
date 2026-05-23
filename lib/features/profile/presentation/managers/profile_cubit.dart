@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../../../core/models/movies_model.dart';
 import '../../../../core/network/api_service.dart';
 import '../../../home/data/data_source/home_remote_data_source.dart';
@@ -109,60 +110,39 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
 
-  Future<List<MovieModel>> getWishlistMovies(
-      List<String> ids,
-      ) async {
-
+  Future<List<MovieModel>> getWishlistMovies(List<String> ids) async {
     try {
-
       List<MovieModel> movies = [];
-
       for (String id in ids) {
-
-        final movie =
-        await HomeRepo(
-          HomeRemoteDataSource(
-            ApiService(Dio()),
-          ),
-        ).getMovieById(
-          int.parse(id),
-        );
-
+        final movie = await sl<HomeRepo>().getMovieById(int.parse(id));
         movies.add(movie);
       }
-
+      await profileRepo.localDataSource.saveWishlist(movies);
       return movies;
-
     } catch (e) {
+      final localMovies = profileRepo.localDataSource.getWishlist();
+      if (localMovies.isNotEmpty) {
+        return localMovies;
+      }
       throw e.toString();
     }
   }
 
-  Future<List<MovieModel>> getHistoryMovies(
-      List<String> ids,
-      ) async {
-
+  Future<List<MovieModel>> getHistoryMovies(List<String> ids) async {
     try {
-
       List<MovieModel> movies = [];
-
       for (String id in ids) {
-
-        final movie =
-        await HomeRepo(
-          HomeRemoteDataSource(
-            ApiService(Dio()),
-          ),
-        ).getMovieById(
-          int.parse(id),
-        );
-
+        final movie = await sl<HomeRepo>().getMovieById(int.parse(id));
         movies.add(movie);
       }
 
+      await profileRepo.localDataSource.saveHistory(movies);
       return movies;
-
     } catch (e) {
+      final localMovies = profileRepo.localDataSource.getHistory();
+      if (localMovies.isNotEmpty) {
+        return localMovies;
+      }
       throw e.toString();
     }
   }

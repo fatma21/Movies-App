@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
 import '../../data/repository/auth_repo.dart';
@@ -5,7 +6,9 @@ import '../../data/repository/auth_repo.dart';
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepo authRepo;
 
-  AuthCubit(this.authRepo) : super(AuthInitial());
+  AuthCubit(this.authRepo) : super(AuthInitial()) {
+    _listenAuthChanges();
+  }
 
   void register({
     required String email,
@@ -27,6 +30,16 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(RegisterError(e.toString()));
     }
+  }
+
+  void _listenAuthChanges() {
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user != null) {
+        emit(LoginSuccess());
+      } else {
+        emit(AuthInitial());
+      }
+    });
   }
 
   void login({required String email, required String password}) async {

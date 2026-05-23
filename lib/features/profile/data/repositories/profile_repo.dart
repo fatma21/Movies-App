@@ -1,13 +1,23 @@
 import '../../../auth/data/models/user.dart';
+import '../data_sources/profile_local_data_source.dart';
 import '../data_sources/profile_remote_data_source.dart';
 
 class ProfileRepo {
   final ProfileRemoteDataSource remoteDataSource;
+  final ProfileLocalDataSource localDataSource;
 
-  ProfileRepo(this.remoteDataSource);
+  ProfileRepo(this.remoteDataSource, this.localDataSource);
 
   Future<MyUserModel> getUserData(String uid) async {
-    return await remoteDataSource.getUserData(uid);
+    try {
+      final user = await remoteDataSource.getUserData(uid);
+      await localDataSource.saveUserData(user);
+      return user;
+    } catch (e) {
+      final localUser = localDataSource.getUserData(uid);
+      if (localUser != null) return localUser;
+      rethrow;
+    }
   }
 
   Future<void> updateProfile(String uid, Map<String, dynamic> data) async {

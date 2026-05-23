@@ -8,7 +8,6 @@ class DetailsCubit extends Cubit<DetailsState> {
 
   DetailsCubit(this._repo) : super(DetailsInitial());
 
-  // Update your function to accept the movie you already have
   Future<void> fetchMovieDetails(int movieId) async {
     emit(DetailsLoading());
 
